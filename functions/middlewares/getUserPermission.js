@@ -1,4 +1,5 @@
-import { verify } from "jsonwebtoken";
+const jsonwebtoken = require("jsonwebtoken");
+const { verify } = jsonwebtoken;
 
 export function getUserPermission(request, response, next) {
   const authToken = request.headers.authorization;
@@ -19,3 +20,5 @@ export function getUserPermission(request, response, next) {
     return response.status(401).json({ error: err });
   }
 }
+
+module.exports = getUserPermission;
