@@ -16,4 +16,23 @@ model User {
   password   String
 
   permission String   @default("user")
+  wallet     Wallet?
+}
+
+model Wallet {
+  id         String   @id @default(uuid())  
+  user       User?    @relation(fields: [user_id], references: [id])
+  user_id     String   @unique
+
+  cryptos    Crypto[]
+}
+
+model Crypto {
+  id         String   @id @default(uuid())  
+  wallet     Wallet @relation(fields: [wallet_id], references: [id])
+  wallet_id  String
+
+  alias      String
+  price      Float
+  date       DateTime
 }

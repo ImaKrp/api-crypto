@@ -15,7 +15,7 @@ async function execute(body) {
 
   if (!user) {
     throw {
-      error: { field: "username", message: "not registered." },
+      error: { key: ["username"], message: "not registered." },
       code: 404,
     };
   }
@@ -24,8 +24,8 @@ async function execute(body) {
 
   if (!validatePassword) {
     throw {
-      error: { field: "password", message: "wrong password." },
-      code: 400,
+      error: { key: ["password"], message: "wrong password." },
+      code: 401,
     };
   }
 

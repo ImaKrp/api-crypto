@@ -1,6 +1,8 @@
-const handleFields = (errors) =>
+const handleFields = (errors, edit = false) =>
   errors.length === 1
-    ? `Field is required: ${errors[0]}`
-    : `Fields are required: ${errors.join(", ")}`;
+    ? `${edit ? "Some f" : "F"}ield is required: ${errors[0]}`
+    : `${edit ? "Some f" : "F"}ield${
+        edit ? " is" : "s are"
+      } required: ${errors.join(", ")}`;
 
 module.exports.handleFields = handleFields;

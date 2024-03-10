@@ -1,7 +1,6 @@
 const jsonwebtoken = require("jsonwebtoken");
 const { verify } = jsonwebtoken;
-
-export function getUserPermission(request, response, next) {
+function getUserPermission(request, response, next) {
   const authToken = request.headers.authorization;
 
   if (!authToken) {
@@ -14,7 +13,6 @@ export function getUserPermission(request, response, next) {
   try {
     const { user } = verify(token, process.env.JWT_SECRET);
     request.is_admin = user.permission === "admin";
-
     return next();
   } catch (err) {
     return response.status(401).json({ error: err });

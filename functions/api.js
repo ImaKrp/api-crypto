@@ -1,14 +1,13 @@
 const express = require("express");
 const serverless = require("serverless-http");
 const cors = require("cors");
-const http = require("http");
+const http = require("http"); //! coment on deploy
 const { router } = require("./routes.js");
 require("dotenv/config");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 
 const serverHttp = http.createServer(app); //! coment on deploy
 serverHttp.listen(8000, () =>

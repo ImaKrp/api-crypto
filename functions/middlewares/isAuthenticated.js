@@ -2,13 +2,12 @@ const jsonwebtoken = require("jsonwebtoken");
 const prismaClient = require("../prisma/index.js");
 const { verify } = jsonwebtoken;
 
-async function ensureAuthenticated(request, response, next) {
+async function isAuthenticated(request, response, next) {
   const authToken = request.headers.authorization;
 
   if (!authToken) {
-    return response.status(401).json({
-      error: "token.invalid",
-    });
+    request.user_id = "";
+    return next();
   }
 
   const [, token] = authToken.split(" ");
@@ -23,10 +22,10 @@ async function ensureAuthenticated(request, response, next) {
       },
     });
 
-    if (!isValidUser)
-      return response.status(401).json({
-        error: "token.invalid",
-      });
+    if (!isValidUser) {
+      request.user_id = "";
+      return next();
+    }
 
     return next();
   } catch (err) {
@@ -34,4 +33,4 @@ async function ensureAuthenticated(request, response, next) {
   }
 }
 
-module.exports = ensureAuthenticated;
+module.exports = isAuthenticated;
